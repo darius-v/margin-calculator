@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Form\Type\OrderType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class OrderController extends AbstractController
 {
     #[Route('/', name: 'order_form')]
-    public function ordersAction(Request $request): Response
+    public function ordersAction(Request $request, EntityManagerInterface $entityManager): Response
     {
         $order = new Order();
 
@@ -34,7 +36,6 @@ class OrderController extends AbstractController
                 $order->setType(Order::TYPE_SELL);
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($order);
             $entityManager->flush();
 
