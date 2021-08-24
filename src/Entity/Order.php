@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    public const TYPE_BUY = 'buy';
+    public const TYPE_SELL = 'sell';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
