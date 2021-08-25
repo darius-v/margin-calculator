@@ -32,9 +32,12 @@ class MarginCalculatorTest extends TestCase
 
         $nextOrders = [];
         $previousId = 0;
+        /** @var Order $order */
         foreach ($orders as $order) {
-            $nextOrders[] = [$previousId, $order];
-            $previousId = $order->getId();
+            if ($order->getType() === Order::TYPE_BUY) {
+                $nextOrders[] = [$previousId, $order];
+                $previousId = $order->getId();
+            }
         }
 
         $mock
@@ -70,6 +73,32 @@ class MarginCalculatorTest extends TestCase
                     $this->mockOrder(2, Order::TYPE_SELL, 6, 3),
                 ],
             ],
+            '2nd sell order sells from 1st and 2nd buy orders' => [
+                'expected margin' => (21-17) * 6 + (23-17) * 4 + (23-20) * 4,
+                'orders' => [
+                    $this->mockOrder(1, Order::TYPE_BUY, 10, 17),
+                    $this->mockOrder(2, Order::TYPE_SELL, 6, 21),
+                    $this->mockOrder(3, Order::TYPE_BUY, 10, 20),
+                    $this->mockOrder(4, Order::TYPE_SELL, 8, 23),
+                ],
+            ],
+            'Sell order sells from 2 buy orders' => [
+                'expected margin' => (21-17) * 10 + (21-20) * 1,
+                'orders' => [
+                    $this->mockOrder(1, Order::TYPE_BUY, 10, 17),
+                    $this->mockOrder(3, Order::TYPE_BUY, 10, 20),
+                    $this->mockOrder(2, Order::TYPE_SELL, 11, 21),
+                ],
+            ],
+            '2 sell orders sells from 2 buy orders, all quantity sold' => [
+                'expected margin' => (21-17) * 10 + (21-20) * 1 + (22-20) * 9,
+                'orders' => [
+                    $this->mockOrder(1, Order::TYPE_BUY, 10, 17),
+                    $this->mockOrder(3, Order::TYPE_BUY, 10, 20),
+                    $this->mockOrder(2, Order::TYPE_SELL, 11, 21),
+                    $this->mockOrder(2, Order::TYPE_SELL, 9, 22),
+                ],
+            ]
         ];
     }
 
