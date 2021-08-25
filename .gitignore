@@ -55,3 +55,4 @@
 .env
 /docker/mysql
 /.idea
+.phpunit.result.cache

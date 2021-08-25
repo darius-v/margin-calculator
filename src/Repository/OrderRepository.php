@@ -12,14 +12,6 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    /**
-     * @return Order[]
-     */
-//    public function getOrders(): array
-//    {
-//        return $this->findBy([], ['id' => 'DESC']);
-//    }
-
     public function getSellTotals(): array
     {
         return $this->createQueryBuilder('o')
@@ -30,7 +22,7 @@ class OrderRepository extends ServiceEntityRepository
             ->getScalarResult();
     }
 
-    public function getNextOrder(int $previousBuyOrderId, string $type): ?Order
+    public function getNextBuyOrder(int $previousBuyOrderId): ?Order
     {
         $qb = $this->createQueryBuilder('o');
 
@@ -38,7 +30,7 @@ class OrderRepository extends ServiceEntityRepository
             ->andWhere('o.id > :previousId')
             ->setParameter('previousId', $previousBuyOrderId)
             ->andWhere('o.type = :type')
-            ->setParameter('type', $type)
+            ->setParameter('type', Order::TYPE_BUY)
             ->setMaxResults(1)
         ;
 

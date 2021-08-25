@@ -11,6 +11,7 @@ class MarginCalculator
     {
     }
 
+    // todo explain the calculation logic
     public function calculate(): float
     {
 //        $orders = $this->orderRepository->getOrders();
@@ -46,7 +47,7 @@ class MarginCalculator
         $previousBuyOrderId = 0;
         $buyCostPriceTotal = 0;
         while ($sellQuantity > $oldestItemsBuyQuantity) {
-            $buyOrder = $this->orderRepository->getNextOrder($previousBuyOrderId, Order::TYPE_BUY); // todo maybe no need 2nd param?
+            $buyOrder = $this->orderRepository->getNextBuyOrder($previousBuyOrderId);
             $needMoreBuyQuantity = $sellQuantity - $oldestItemsBuyQuantity;
             if ($needMoreBuyQuantity > $buyOrder->getQuantity()) {
                 $buyCostPriceTotal += $buyOrder->getQuantity() * $buyOrder->getPrice();
@@ -67,6 +68,6 @@ class MarginCalculator
 //        370 islaidos
 //        6*21 + 8 * 23 = 310 pajamos
 
-        return $buyCostPriceTotal -  $sellTotals[0]['priceTotal'];
+        return $sellTotals[0]['priceTotal'] - $buyCostPriceTotal;
     }
 }
