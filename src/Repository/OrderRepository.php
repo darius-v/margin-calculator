@@ -22,6 +22,16 @@ class OrderRepository extends ServiceEntityRepository
             ->getScalarResult();
     }
 
+    public function getSellBuyQuantities(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.type, SUM(o.quantity) AS quantityTotal')
+            ->addGroupBy('o.type')
+            ->addOrderBy('o.type')
+            ->getQuery()
+            ->getScalarResult();
+    }
+
     public function getNextBuyOrder(int $previousBuyOrderId): ?Order
     {
         $qb = $this->createQueryBuilder('o');

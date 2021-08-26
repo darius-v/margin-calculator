@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
@@ -28,11 +29,15 @@ class Order
     /**
      * @ORM\Column(type="integer")
      */
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     private int $quantity;
 
     /**
      * @ORM\Column(type="decimal")
      */
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     private float $price;
 
     /**

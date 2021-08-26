@@ -15,6 +15,11 @@
     </head>
     <body>
         {% block body %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-error">
+                    {{ message }}
+                </div>
+            {% endfor %}
             {{ form(form) }}
             <a href="/get-total-margin">Get total margin</a>
         {% endblock %}
