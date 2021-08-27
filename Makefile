@@ -19,7 +19,7 @@ init:
 	docker-compose exec php php bin/console doctrine:fixtures:load --no-interaction
 
 build:
-	build/build.sh
+	scripts/build.sh
 
 tests:
 	docker-compose exec php php vendor/bin/phpunit
