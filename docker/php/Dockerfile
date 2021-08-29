@@ -2,18 +2,12 @@ FROM php:8.0-fpm
 
 RUN apt-get update -yqq && \
     apt-get install -yqq \
-    git \
-    curl \
-    zip \
-    unzip \
-    gzip \
-    libzip-dev \
     libicu-dev \
     nano
 
 RUN docker-php-ext-configure intl
 
-RUN docker-php-ext-install intl pdo pdo_mysql zip opcache bcmath sockets
+RUN docker-php-ext-install intl pdo pdo_mysql opcache
 
 RUN pecl install xdebug && docker-php-ext-enable xdebug opcache
 

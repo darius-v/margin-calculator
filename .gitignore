@@ -26,7 +26,6 @@
 /.web-server-pid
 
 # Added by me:
-.env
 /docker/mysql
 /.idea
 .phpunit.result.cache
