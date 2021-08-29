@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use App\Service\MarginCalculator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MarginController extends AbstractController
 {
     #[Route('/get-total-margin', name: 'get_total_margin')]
-    public function getTotalMargin(MarginCalculator $marginCalculator): Response
+    public function getTotalMargin(MarginCalculator $marginCalculator): RedirectResponse
     {
-        return $this->json($marginCalculator->calculate());
+        $this->addFlash('info', 'Margin: ' . $marginCalculator->calculate());
+
+        return $this->redirectToRoute('order_form');
     }
 }

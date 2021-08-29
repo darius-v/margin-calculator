@@ -21,6 +21,12 @@
 
                 <h1>Margin calculator</h1>
 
+                {% for message in app.flashes('info') %}
+                    <div class="alert alert-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
                 {% if not form.vars.valid %}
                     <div class="alert alert-danger" role="alert">
                         {{ form_errors(form) }}
@@ -48,7 +54,7 @@
 
                 </div>
 
-                <a href="/get-total-margin">Get total margin</a>
+                <a class="btn btn-primary m-1" href="/get-total-margin">Get total margin</a>
             </div>
         {% endblock %}
     </body>
