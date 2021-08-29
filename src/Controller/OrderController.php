@@ -43,6 +43,8 @@ class OrderController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Order added');
+
             return $this->redirectToRoute('order_form');
         }
 

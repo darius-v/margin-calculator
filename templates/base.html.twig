@@ -27,6 +27,12 @@
                     </div>
                 {% endfor %}
 
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
                 {% if not form.vars.valid %}
                     <div class="alert alert-danger" role="alert">
                         {{ form_errors(form) }}
