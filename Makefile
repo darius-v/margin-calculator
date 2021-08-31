@@ -1,4 +1,4 @@
-.PHONY: start stop init build tests
+.PHONY: start stop init tests
 
 include .env
 export $(shell sed 's/=.*//' .env)
@@ -16,9 +16,6 @@ init:
 	docker-compose exec php /app/scripts/wait-for-it.sh mysql:$(MYSQL_PORT) -- echo "mysql is up"
 	docker-compose exec php php bin/console doctrine:database:create
 	docker-compose exec php php bin/console doctrine:migrations:migrate --no-interaction
-
-build:
-	scripts/build.sh
 
 tests:
 	docker-compose exec php php vendor/bin/phpunit
