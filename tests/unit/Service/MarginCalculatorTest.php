@@ -1,6 +1,6 @@
 <?php /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 
-namespace App\Tests\Service;
+namespace App\Tests\unit\Service;
 
 use App\Entity\Order;
 use App\Repository\OrderRepository;
